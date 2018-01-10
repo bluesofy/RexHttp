@@ -15,7 +15,7 @@ Http Lib Base on Retrofit/RxJava/OkHttp For Android Develop.
 api 'cn.byk.pandora:rexhttp:1.0.0'
 ```
 
-- 请自行添加第三方库，便于自定义版本
+- 请自行添加第三方库，便于自定义版本，避免库多版本加载
 ```gradle
 api 'com.alibaba:fastjson:1.1.63.android'
 
@@ -41,6 +41,7 @@ api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 # A resource is loaded with a relative path so the package of this class must be preserved.
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
 ```
+<br>
 
 ### 特别鸣谢  Tks to
 - [RxEasyHttp](https://github.com/zhou-you/RxEasyHttp)
