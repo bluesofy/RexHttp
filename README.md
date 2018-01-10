@@ -3,12 +3,11 @@
 [ ![Download](https://api.bintray.com/packages/blueyuki/maven/RexHttp/images/download.svg) ](https://bintray.com/blueyuki/maven/RexHttp/_latestVersion)
 
 Http Lib Base on Retrofit/RxJava/OkHttp For Android Develop.
-<br>
+<br><br>
 基于Retrofit/RxJava/OkHttp实现的Http封装库，<br>
-在RxEasyHttp的基础上简化了缓存功能，并修改了部分方法及参数配置，使其更贴近实际业务的使用。
+在RxEasyHttp的基础上简化了缓存功能，并修改了部分方法及参数配置，使其更贴近实际业务的使用<br>
 [README on GitHub](https://github.com/bluesofy/RexHttp/blob/master/README.md)
-<br>
-<br>
+<br><br>
 
 ### 使用说明  Usage
 - 添加依赖
@@ -16,7 +15,7 @@ Http Lib Base on Retrofit/RxJava/OkHttp For Android Develop.
 api 'cn.byk.pandora:rexhttp:1.0.0'
 ```
 
-- 自带第三方库
+- 请自行添加第三方库，便于自定义版本
 ```gradle
 api 'com.alibaba:fastjson:1.1.63.android'
 
@@ -32,6 +31,16 @@ api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
 
 - 具体调用方法有空再补充，目前本库自用
 <br>
+
+### 关于混淆  ProGuard
+- 只需添加OkHttp的混淆
+```
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+```
 
 ### 特别鸣谢  Tks to
 - [RxEasyHttp](https://github.com/zhou-you/RxEasyHttp)
