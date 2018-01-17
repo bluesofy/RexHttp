@@ -4,15 +4,16 @@
 
 Http Lib Base on Retrofit/RxJava/OkHttp For Android Develop.
 <br><br>
-基于Retrofit/RxJava/OkHttp实现的Http封装库，<br>
-在RxEasyHttp的基础上简化了缓存功能，并修改了部分方法及参数配置，使其更贴近实际业务的使用<br>
-[README on GitHub](https://github.com/bluesofy/RexHttp/blob/master/README.md)
+基于Retrofit/RxJava/OkHttp实现的Http封装库，
+在RxEasyHttp的基础上简化了缓存功能，
+并修改了部分方法及参数配置，
+使其更贴近实际业务的使用
 <br><br>
 
 ### 使用说明  Usage
 - 添加依赖
 ```gradle
-api 'cn.byk.pandora:rexhttp:1.0.0'
+api 'cn.byk.pandora:rexhttp:1.0.1'
 ```
 
 - 请自行添加第三方库，便于自定义版本，避免库多版本加载

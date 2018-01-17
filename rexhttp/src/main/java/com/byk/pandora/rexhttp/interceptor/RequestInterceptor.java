@@ -116,6 +116,10 @@ public class RequestInterceptor implements Interceptor {
     protected byte[] parseResponseBytes(Response response, byte[] body) {
         return body;
     }
+    
+    protected void log(String msg) {
+        Log.d(mTag, msg);
+    }
 
     private StringBuilder logRequest(Request request, Connection connection, String url) {
         StringBuilder sBuilder = new StringBuilder(
@@ -193,7 +197,7 @@ public class RequestInterceptor implements Interceptor {
 
     private void print(String msg) {
         if (mEnableLog) {
-            Log.d(mTag, msg);
+            log(msg);
         }
     }
 

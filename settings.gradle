@@ -1,1 +1,2 @@
-include ':app', ':rexhttp'
+include ':app'
+include ':rexhttp'

@@ -12,7 +12,7 @@ ext {
     espressoVersion = '3.0.1'
 
     // version
-    versionCode = '100'
+    versionCode = '101'
 
     // Bin-tray
     bintrayRepo = 'maven'
@@ -21,7 +21,7 @@ ext {
     publishedGroupId = 'cn.byk.pandora'
     artifact = 'rexhttp'
     libraryName = 'RexHttp'
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     libraryDescription = 'Http Lib Base on Retrofit/RxJava/OkHttp'
 
