@@ -2,8 +2,6 @@
 
 [ ![Download](https://api.bintray.com/packages/blueyuki/maven/RexHttp/images/download.svg) ](https://bintray.com/blueyuki/maven/RexHttp/_latestVersion)
 
-Http Lib Base on Retrofit/RxJava/OkHttp For Android Develop.
-<br><br>
 基于Retrofit/RxJava/OkHttp实现的Http封装库，
 在RxEasyHttp的基础上简化了缓存功能，
 并修改了部分方法及参数配置，
