@@ -1,7 +1,5 @@
 package com.byk.pandora.rexhttp.model;
 
-import java.util.List;
-
 /**
  * Created by Byk on 2017/12/8.
  *
@@ -15,7 +13,6 @@ public class ApiResult<T> {
     private String msg;
     private String content;
     private T data;
-    private List<T> datas;
 
     public int getCode() {
         return code;
@@ -50,14 +47,6 @@ public class ApiResult<T> {
 
     public void setData(T data) {
         this.data = data;
-    }
-
-    public List<T> getDatas() {
-        return datas;
-    }
-
-    public void setDatas(List<T> datas) {
-        this.datas = datas;
     }
 
     public boolean isOk() {

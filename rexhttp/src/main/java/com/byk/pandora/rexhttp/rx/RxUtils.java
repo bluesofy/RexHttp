@@ -3,6 +3,7 @@ package com.byk.pandora.rexhttp.rx;
 import android.util.Log;
 
 import com.byk.pandora.rexhttp.model.ApiResult;
+import com.byk.pandora.rexhttp.model.DataResult;
 import com.byk.pandora.rexhttp.rx.function.ResultToDataFunction;
 import com.byk.pandora.rexhttp.rx.function.ThrowableToDataFunction;
 
@@ -48,12 +49,12 @@ public class RxUtils {
         };
     }
 
-    public static <T> ObservableTransformer<ApiResult<T>, T> dispatch(final boolean requestInSync,
-                                                                      final boolean responseInSync) {
-        return new ObservableTransformer<ApiResult<T>, T>() {
+    public static <T> ObservableTransformer<ApiResult<DataResult<T>>, DataResult<T>> dispatch(
+            final boolean requestInSync, final boolean responseInSync) {
+        return new ObservableTransformer<ApiResult<DataResult<T>>, DataResult<T>>() {
             @Override
-            public ObservableSource<T> apply(@NonNull Observable<ApiResult<T>> upstream) {
-                Observable<ApiResult<T>> stream = upstream;
+            public ObservableSource<DataResult<T>> apply(@NonNull Observable<ApiResult<DataResult<T>>> upstream) {
+                Observable<ApiResult<DataResult<T>>> stream = upstream;
 
                 // Thread Change
                 if (!requestInSync) {
@@ -77,7 +78,7 @@ public class RxUtils {
                                      Log.i(TAG, "doFinally");
                                  }
                              })
-                             .onErrorResumeNext(new ThrowableToDataFunction<T>());
+                             .onErrorResumeNext(new ThrowableToDataFunction<DataResult<T>>());
             }
         };
     }

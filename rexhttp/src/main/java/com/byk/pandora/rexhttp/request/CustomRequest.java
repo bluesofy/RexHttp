@@ -3,6 +3,7 @@ package com.byk.pandora.rexhttp.request;
 import android.content.Context;
 
 import com.byk.pandora.rexhttp.model.ApiResult;
+import com.byk.pandora.rexhttp.model.DataResult;
 import com.byk.pandora.rexhttp.rx.RxUtils;
 import com.byk.pandora.rexhttp.rx.function.ResponseParserFunction;
 import com.byk.pandora.rexhttp.rx.function.ResultToDataFunction;
@@ -33,7 +34,7 @@ public class CustomRequest extends BaseRequest {
                          .retryWhen(new ThrowableResolveFunction(retryCount, retryDelay, retryIncreaseDelay));
     }
 
-    public <T> void call(Observable<T> observable, ResponseWatcher<T> watcher) {
+    public <T> void call(Observable<DataResult<T>> observable, ResponseWatcher<T> watcher) {
         call(observable, new SimpleObserver<>(iContext, watcher));
     }
 
@@ -42,11 +43,11 @@ public class CustomRequest extends BaseRequest {
                   .subscribe(subscriber);
     }
 
-    public <T> Observable<T> apiCall(Observable<ApiResult<T>> observable) {
+    public <T> Observable<DataResult<T>> apiCall(Observable<ApiResult<DataResult<T>>> observable) {
         checkValidate();
         return observable.map(new ResultToDataFunction<T>())
-                         .compose(RxUtils.<T>dispatch())
-                         .compose(RxUtils.<T>transError())
+                         .compose(RxUtils.<DataResult<T>>dispatch())
+                         .compose(RxUtils.<DataResult<T>>transError())
                          .retryWhen(new ThrowableResolveFunction(retryCount, retryDelay, retryIncreaseDelay));
     }
 
@@ -61,7 +62,8 @@ public class CustomRequest extends BaseRequest {
         return getObservable(observable, parser).subscribeWith(new SimpleObserver<>(iContext, watcher));
     }
 
-    private <T> Observable<T> getObservable(Observable<ResponseBody> observable, ResponseParserFunction<T> parser) {
+    private <T> Observable<DataResult<T>> getObservable(Observable<ResponseBody> observable,
+                                                        ResponseParserFunction<T> parser) {
         return observable.map(parser)
                          .compose(RxUtils.<T>dispatch(isSyncRequest, isSyncResponse))
                          .retryWhen(new ThrowableResolveFunction(retryCount, retryDelay, retryIncreaseDelay));

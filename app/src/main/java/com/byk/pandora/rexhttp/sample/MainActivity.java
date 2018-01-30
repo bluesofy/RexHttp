@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.byk.pandora.rexhttp.exception.ApiException;
+import com.byk.pandora.rexhttp.model.DataResult;
 import com.byk.pandora.rexhttp.sample.bean.ApiCenter;
 import com.byk.pandora.rexhttp.sample.task.RequestBodyTask;
 import com.byk.pandora.rexhttp.watcher.BaseWatcher;
@@ -105,7 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
 
                 @Override
-                public void onSuccess(ApiCenter data) {
+                public void onSuccess(DataResult<ApiCenter> result) {
+                    ApiCenter data = result.getData();
                     tips(data.getToken());
                 }
             });

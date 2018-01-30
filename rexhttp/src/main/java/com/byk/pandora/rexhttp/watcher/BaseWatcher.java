@@ -1,6 +1,7 @@
 package com.byk.pandora.rexhttp.watcher;
 
 import com.byk.pandora.rexhttp.exception.ApiException;
+import com.byk.pandora.rexhttp.model.DataResult;
 
 /**
  * Created by Byk on 2017/12/15.
@@ -20,8 +21,8 @@ public abstract class BaseWatcher<T> extends ResponseWatcher<T> {
     /**
      * onSuccess
      *
-     * @param data Response Data
+     * @param result Response Data
      */
     @Override
-    public abstract void onSuccess(T data);
+    public abstract void onSuccess(DataResult<T> result);
 }

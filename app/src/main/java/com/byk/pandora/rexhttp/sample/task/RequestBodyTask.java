@@ -28,7 +28,7 @@ public class RequestBodyTask {
 
     public void run(BaseWatcher<ApiCenter> watcher) {
         ApiParams params = getParams();
-        RexHttp.post(mContext, "/xxx")
+        RexHttp.post(mContext, "/xx")
                .requestBody(getRequestBodyWrapper(params))
                .baseUrl(RexHttp.getBaseUrl())
                .start(watcher, new ConnectParser());

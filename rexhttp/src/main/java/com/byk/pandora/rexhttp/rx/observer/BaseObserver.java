@@ -22,8 +22,6 @@ public abstract class BaseObserver<T> extends DisposableObserver<T> {
 
     private WeakReference<Context> mContextWeakReference;
 
-    public BaseObserver() {}
-
     public BaseObserver(Context context) {
         if (context != null) {
             mContextWeakReference = new WeakReference<>(context);

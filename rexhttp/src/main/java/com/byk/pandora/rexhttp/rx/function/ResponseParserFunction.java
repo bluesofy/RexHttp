@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.byk.pandora.rexhttp.exception.ApiErrorCode;
 import com.byk.pandora.rexhttp.model.ApiResult;
+import com.byk.pandora.rexhttp.model.DataResult;
 
 import java.io.IOException;
 
@@ -18,19 +19,23 @@ import okhttp3.ResponseBody;
  *
  * @author Byk
  */
-public class ResponseParserFunction<T> implements Function<ResponseBody, ApiResult<T>> {
+public class ResponseParserFunction<T> implements Function<ResponseBody, ApiResult<DataResult<T>>> {
 
     private static final String CODE = "code";
     private static final String MSG = "msg";
     private static final String DATA = "data";
     private static final String LIST = "list";
 
+    private DataResult<T> mResult;
+
     private Class<T> mType;
     private boolean mIsListType;
 
-    public ResponseParserFunction(Class<T> type, boolean isListType) {
-        mType = type;
-        mIsListType = isListType;
+    public ResponseParserFunction(DataResult<T> result) {
+        mResult = result;
+
+        mType = mResult.getType();
+        mIsListType = mResult.isListType();
     }
 
     public Class<T> getType() {
@@ -42,8 +47,8 @@ public class ResponseParserFunction<T> implements Function<ResponseBody, ApiResu
     }
 
     @Override
-    public ApiResult<T> apply(ResponseBody responseBody) throws Exception {
-        ApiResult<T> apiResult = new ApiResult<>();
+    public ApiResult<DataResult<T>> apply(ResponseBody responseBody) throws Exception {
+        ApiResult<DataResult<T>> apiResult = new ApiResult<>();
         apiResult.setCode(ApiErrorCode.DEFAULT_ERROR);
 
         try {
@@ -68,32 +73,30 @@ public class ResponseParserFunction<T> implements Function<ResponseBody, ApiResu
         return body.string();
     }
 
-    protected String parseData(JSONObject jsonObject, ApiResult<T> apiResult) throws JSONException {
+    protected String parseData(JSONObject jsonObject, ApiResult<DataResult<T>> apiResult) throws JSONException {
         String content = jsonObject.getString(DATA);
-        if (content == null) {
-            apiResult.setData(jsonObject.toJavaObject(mType));
-        } else {
-            apiResult.setData(JSON.parseObject(content, mType));
-        }
+        mResult.setData((content == null) ? jsonObject.toJavaObject(mType) : JSON.parseObject(content, mType));
+        apiResult.setData(mResult);
         return content;
     }
 
     /** For List */
-    protected String parseDatas(JSONObject jsonObject, ApiResult<T> apiResult) throws JSONException {
+    protected String parseDatas(JSONObject jsonObject, ApiResult<DataResult<T>> apiResult) throws JSONException {
         String content = jsonObject.getString(LIST);
-        apiResult.setDatas(JSON.parseArray(content, mType));
+        mResult.setDatas(JSON.parseArray(content, mType));
+        apiResult.setData(mResult);
         return content;
     }
 
-    protected void parseCode(JSONObject jsonObject, ApiResult<T> apiResult) throws JSONException {
+    protected void parseCode(JSONObject jsonObject, ApiResult<DataResult<T>> apiResult) throws JSONException {
         apiResult.setCode(jsonObject.getIntValue(CODE));
     }
 
-    protected void parseMsg(JSONObject jsonObject, ApiResult<T> apiResult) throws JSONException {
+    protected void parseMsg(JSONObject jsonObject, ApiResult<DataResult<T>> apiResult) throws JSONException {
         apiResult.setMsg(jsonObject.getString(MSG));
     }
 
-    private void parseApiResult(String json, ApiResult<T> apiResult) throws JSONException {
+    private void parseApiResult(String json, ApiResult<DataResult<T>> apiResult) throws JSONException {
         if (TextUtils.isEmpty(json)) {
             return;
         }

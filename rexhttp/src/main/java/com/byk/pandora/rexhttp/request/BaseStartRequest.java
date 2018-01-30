@@ -3,6 +3,7 @@ package com.byk.pandora.rexhttp.request;
 import android.content.Context;
 
 import com.byk.pandora.rexhttp.model.ApiResult;
+import com.byk.pandora.rexhttp.model.DataResult;
 import com.byk.pandora.rexhttp.rx.RxUtils;
 import com.byk.pandora.rexhttp.rx.function.CustomRetryFunction;
 import com.byk.pandora.rexhttp.rx.function.ResponseParserFunction;
@@ -34,7 +35,7 @@ public abstract class BaseStartRequest extends BaseRequest {
     }
 
     @Override
-    public <T> Observable<T> start(ResponseParserFunction<T> parser) {
+    public <T> Observable<DataResult<T>> start(ResponseParserFunction<T> parser) {
         init();
         return getObservable(doRequest(), parser);
     }
@@ -45,14 +46,15 @@ public abstract class BaseStartRequest extends BaseRequest {
     }
 
     @Override
-    public <T> Disposable start(ResponseWatcherWrapper<? extends ApiResult<T>, T> watcherWrapper,
+    public <T> Disposable start(ResponseWatcherWrapper<? extends ApiResult<DataResult<T>>, T> watcherWrapper,
                                 ResponseParserFunction<T> parser) {
         init();
         return getObservable(doRequest(), parser).subscribeWith(
                 new SimpleObserver<>(iContext, watcherWrapper.getWatcher()));
     }
 
-    private <T> Observable<T> getObservable(Observable<ResponseBody> observable, ResponseParserFunction<T> parser) {
+    private <T> Observable<DataResult<T>> getObservable(Observable<ResponseBody> observable,
+                                                        ResponseParserFunction<T> parser) {
         return observable.map(parser)
                          .compose(RxUtils.<T>dispatch(isSyncRequest, isSyncResponse))
                          .retryWhen(new ThrowableResolveFunction(retryCount, retryDelay, retryIncreaseDelay))

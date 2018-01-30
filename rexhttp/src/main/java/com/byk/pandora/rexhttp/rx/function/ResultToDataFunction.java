@@ -3,6 +3,7 @@ package com.byk.pandora.rexhttp.rx.function;
 import com.byk.pandora.rexhttp.exception.ApiException;
 import com.byk.pandora.rexhttp.exception.ServerException;
 import com.byk.pandora.rexhttp.model.ApiResult;
+import com.byk.pandora.rexhttp.model.DataResult;
 
 import io.reactivex.functions.Function;
 
@@ -11,10 +12,10 @@ import io.reactivex.functions.Function;
  *
  * @author Byk
  */
-public class ResultToDataFunction<T> implements Function<ApiResult<T>, T> {
+public class ResultToDataFunction<T> implements Function<ApiResult<DataResult<T>>, DataResult<T>> {
 
     @Override
-    public T apply(ApiResult<T> tApiResult) throws Exception {
+    public DataResult<T> apply(ApiResult<DataResult<T>> tApiResult) throws Exception {
         if (ApiException.isOk(tApiResult)) {
             return tApiResult.getData();
         } else {

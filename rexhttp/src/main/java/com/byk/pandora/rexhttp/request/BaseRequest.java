@@ -12,6 +12,7 @@ import com.byk.pandora.rexhttp.interceptor.RequestInterceptor;
 import com.byk.pandora.rexhttp.model.ApiHeaders;
 import com.byk.pandora.rexhttp.model.ApiParams;
 import com.byk.pandora.rexhttp.model.ApiResult;
+import com.byk.pandora.rexhttp.model.DataResult;
 import com.byk.pandora.rexhttp.rule.CertifyManager;
 import com.byk.pandora.rexhttp.rx.function.ResponseParserFunction;
 import com.byk.pandora.rexhttp.watcher.ResponseWatcher;
@@ -381,7 +382,7 @@ public abstract class BaseRequest {
      */
     protected abstract Observable<ResponseBody> doRequest();
 
-    public <T> Observable<T> start(ResponseParserFunction<T> parser) {
+    public <T> Observable<DataResult<T>> start(ResponseParserFunction<T> parser) {
         return null;
     }
 
@@ -389,7 +390,7 @@ public abstract class BaseRequest {
         return null;
     }
 
-    public <T> Disposable start(ResponseWatcherWrapper<? extends ApiResult<T>, T> watcherWrapper,
+    public <T> Disposable start(ResponseWatcherWrapper<? extends ApiResult<DataResult<T>>, T> watcherWrapper,
                                 ResponseParserFunction<T> parser) {
         return null;
     }

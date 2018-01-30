@@ -1,5 +1,6 @@
 package com.byk.pandora.rexhttp.sample.http.parser;
 
+import com.byk.pandora.rexhttp.model.DataResult;
 import com.byk.pandora.rexhttp.sample.http.BaseParser;
 import com.byk.pandora.rexhttp.sample.bean.ApiCenter;
 
@@ -11,6 +12,6 @@ import com.byk.pandora.rexhttp.sample.bean.ApiCenter;
 public class ConnectParser extends BaseParser<ApiCenter> {
 
     public ConnectParser() {
-        super(ApiCenter.class, false);
+        super(new DataResult<>(ApiCenter.class, false));
     }
 }
